@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://cdn.bootcss.com/bulma/0.7.2/css/bulma.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <style>
+        .img-center {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <section class="hero is-light bold">
+            <div class="hero-body">
+                <div class="container">
+                    <div class="tile">
+                        <div class="tile is-9">
+                            <article class="tile is-child notification">
+                                <p class="title">NBA GAME SIMULATION</p>
+                                <p class="subtitle">stats.nba.com</p>
+                            </article>
+                        </div>
+                        <div class="tile is-parent">
+                            <figure class="image is-48x48">
+                                <img src="nba-logo.png">
+                            </figure>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+        </section>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent is-vertical">
+                <article class="tile is-child has-text-centered img-center">
+                    <div id="drop" class="dropdown" v-bind:class="{'is-active' :no1}">
+                        <div class="dropdown-trigger">
+                            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu" @click="drop1">
+                                <span>{{ Select1 }}</span>
+                                <span class="icon is-small">
+                                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                            <div class="dropdown-content" v-for="name1 in names">
+                                <a href="#" class="dropdown-item" @click="select1(name1)">
+                                    {{name1}} </a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <article class="tile is-child has-text-centered img-center">
+                    <figure class="image is-480x480">
+                        <img v-bind:src="img1">
+                    </figure>
+                </article>
+            </div>
+            <div class="tile is-parent is is-vertical">
+                <article class="tile is-child has-text-centered">
+                    <p class="title" style="font-size:1000%">VS</p>
+                    <a class="button is-large is-fullwidth" @click="pre">START</a>
+                    <div class="tile is-parent">
+                        <article class="tile is-child notification is-danger">
+                            <p class="title">{{ result }}</p>
+                            <p class="subtitle"></p>
+                            <div class="content">
+                                <!-- Content -->
+                            </div>
+                        </article>
+                    </div>
+                </article>
+            </div>
+            <div class="tile is-parent is-vertical">
+                <article class="tile is-child has-text-centered img-center">
+                    <div class="dropdown" v-bind:class="{'is-active' :no2}">
+                        <div class="dropdown-trigger">
+                            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu" @click="drop2">
+                                <span>{{ Select2 }}</span>
+                                <span class="icon is-small">
+                                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                            <div class="dropdown-content" v-for="name2 in names">
+                                <a href="#" class="dropdown-item" @click="select2(name2)">
+                                    {{name2}} </a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <article class="tile is-child has-text-centered img-center">
+                    <figure class="image is-480x480">
+                        <img v-bind:src="img2">
+                    </figure>
+                </article>
+            </div>
+            </article>
+        </div>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                names: ['Atlanta Hawks', 'Boston Celtics', 'Brooklyn Nets', 'Charlotte Hornets', 'Chicago Bulls', 'Cleveland Cavaliers','Dallas Mavericks','Denver Nuggets','Detroit Pistons','Golden States Warriors','Houston Rockets','Indiana Pacers','Los Angeles Clippers','Los Angeles Lakers','Memphis Grizzlies','Miami Heat','Milwaukee Bucks','Minnesota Timberwolves','New Orleans Pelicans','New York Knicks','Oklahoma City Thunder','Orlando Magic','Philadelphia 76ers','Phoenix Suns','Portland Trail Blazers','Sacramento Kings','San Antonio Spurs','Toronto Raptors','Utah Jazz','Washington Wizards'],
+                abbr: {
+                    'Atlanta Hawks': 'ATL',
+                    'Boston Celtics': 'BOS',
+                    'Brooklyn Nets': 'BKN',
+                    'Charlotte Hornets':'CHA', 
+                    'Chicago Bulls':'CHI', 
+                    'Cleveland Cavaliers': 'CLE',
+                    'Dallas Mavericks':'DAL',
+                    'Denver Nuggets':'DEN',
+                    'Detroit Pistons':'DET',
+                    'Golden States Warriors':'GSW',
+                    'Houston Rockets':'HOU',
+                    'Indiana Pacers':'IND',
+                    'Los Angeles Clippers':'LAC',
+                    'Los Angeles Lakers':'LAL',
+                    'Memphis Grizzlies':'MEM',
+                    'Miami Heat':'MIA',
+                    'Milwaukee Bucks':'MIL',
+                    'Minnesota Timberwolves':'MIN',
+                    'New Orleans Pelicans':'NOP',
+                    'New York Knicks':'NYK',
+                    'Oklahoma City Thunder':'OKC',
+                    'Orlando Magic':'ORL',
+                    'Philadelphia 76ers':'PHI',
+                    'Phoenix Suns':'PHX',
+                    'Portland Trail Blazers':'POR',
+                    'Sacramento Kings':'SAC',
+                    'San Antonio Spurs':'SAS',
+                    'Toronto Raptors':'TOR',
+                    'Utah Jazz':'UTA',
+                    'Washington Wizards':'WAS'
+                },
+                Select1: "Select A Team",
+                Select2: "Select A Team",
+                abbr_selected_1: null,
+                abbr_selected_2: null,
+                no1: false,
+                no2: false,
+                img1: "nba-logo.png",
+                img2: "nba-logo.png",
+                result: "RESULT"
+            },
+            methods: {
+                drop1: function () {
+                    this.no1 = !this.no1;
+                },
+                drop2: function () {
+                    this.no2 = !this.no2;
+                },
+
+                select1: function (name1) {
+                    this.Select1 = name1;
+                    this.abbr_selected_1 = this.abbr[this.Select1];
+                    this.img1 = name1 + '.png';
+                    this.no1 = false;
+                    this.result="RESULT"
+                },
+                select2: function (name2) {
+                    this.Select2 = name2;
+                    this.abbr_selected_2 = this.abbr[this.Select2];
+                    this.img2 = name2 + '.png';
+                    this.no2 = false;
+                    this.result = "RESULT"
+                },
+                pre: function () {
+                    if (this.Select1!=this.Select2 && this.Select1!="Select A Team" && this.Select2!="Select A Team" ) {
+                        axios.get("/nba_pre/" + this.abbr_selected_1 + "/" + this.abbr_selected_2)
+                            .then(function (response) {
+                                // handle success
+                                console.log(response.data);
+                                if (parseInt(response.data) > 0.5) {
+                                    this.result = this.Select1 + " Win";
+                                } else {
+                                    this.result = this.Select2 + " Win";
+                                }
+                            }.bind(this))
+                            .catch(function (error) {
+                                // handle error
+                                console.log(error);
+                            })
+                    }
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>
