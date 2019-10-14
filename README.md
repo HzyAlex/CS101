@@ -1,9 +1,9 @@
 # CS101-python
 Hey, this is Alex. I am a high school student. I really enjoy coding. This is my Github link showing my side projects.
 This Repo include 3 different projects:
-(1) Automatically generate Subtitle for movies
-(2) NBA game simulation
-(3) School athletic games managerment system
+1.  Automatically generate Subtitle for movies
+2.  NBA game simulation
+3.  School athletic games managerment system
 
 
 
@@ -15,11 +15,12 @@ This Repo include 3 different projects:
 4. Generate the subtitle for the movie based on the text timeflag.
 
 
+
 ## Demo Result
 *Automatically generate Subtitle for movies!*
-
+![DemoA](https://github.com/HzyAlex/CS101/blob/master/Automatically%20generate%20Subtitle%20for%20movies/demo2.png)
 *NBA game simulation!*
-
+![DemoA](https://github.com/HzyAlex/CS101/blob/master/nba%20website/demo.png)
 
 
 ## Further Implementation
